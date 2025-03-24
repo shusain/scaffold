@@ -5,7 +5,7 @@
   }, {
     "pattern":"\\QMETA-INF/services/java.util.spi.ResourceBundleControlProvider\\E"
   }, {
-    "pattern":"\\Qtest.html\\E"
+    "pattern":"\\Qtemplates/node-typescript-cli/index.ts\\E"
   }]},
   "bundles":[{
     "name":"net.sourceforge.argparse4j.internal.ArgumentParserImpl",

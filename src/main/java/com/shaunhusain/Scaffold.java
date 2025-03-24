@@ -32,8 +32,7 @@ public class Scaffold
 
         System.out.println( "Scaffold tool started" );
 
-        ResourceLoader rl = new ResourceLoader();
-        rl.readTestResource();
+
 
     }
 
@@ -58,6 +57,11 @@ public class Scaffold
 
         try {
             ns = parser.parseArgs(args);
+
+            String path = ns.getString("folder");
+
+            TypescriptCLIScaffolder tsCLI = new TypescriptCLIScaffolder();
+            tsCLI.scaffold(path);
         } catch (ArgumentParserException e) {
             parser.handleError(e);
             System.exit(1);
