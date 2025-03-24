@@ -1,3 +1,6 @@
+# WIP Work in Progress
+Project is just setup as a starting point for building native executables from JARs for the CLI tool and some basic structure. Still need to migrate some bash scripted functionality into here for scaffolding out projects and load default resources into directories to build new projects.
+
 # Compile and Run
 
 `./mvnw clean compile exec:java`
