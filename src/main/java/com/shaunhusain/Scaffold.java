@@ -29,20 +29,15 @@ public class Scaffold
     public static void main(String[] args )
     {
         setupArgParser(args);
-
-        System.out.println( "Scaffold tool started" );
-
-
-
     }
 
     public static void setupArgParser(String[] args) {
 
-        ArgumentParser parser = ArgumentParsers.newFor("App").build()
+        ArgumentParser parser = ArgumentParsers.newFor("scaffold").build()
                 .defaultHelp(true)
                 .description("Generates initial project configurations for various development work.");
         parser.addArgument("-t", "--type")
-                .choices("ts-cli", "ts-express", "ts-pixi", "ts-matter").setDefault("typescript-cli")
+                .choices("ts-cli", "ts-express", "ts-pixi", "ts-matter").setDefault("ts-cli")
                 .help("Specify template type to use. Options: {ts-cli,ts-express,ts-pixi,ts-matter}").metavar("");
 
         parser.addArgument("folder")
@@ -59,13 +54,27 @@ public class Scaffold
             ns = parser.parseArgs(args);
 
             String path = ns.getString("folder");
+            String targetProjType = ns.getString("type");
 
-            TypescriptCLIScaffolder tsCLI = new TypescriptCLIScaffolder();
-            tsCLI.scaffold(path);
+            System.out.println("Chosen template type: " + targetProjType);
+            runScaffolding(path, targetProjType);
+
+            
         } catch (ArgumentParserException e) {
             parser.handleError(e);
             System.exit(1);
         }
-        System.out.println(ns.getString("type"));
+    }
+    public static void runScaffolding(String path, String projType) {
+        switch (projType) {
+            case "ts-cli":
+                TypescriptCLIScaffolder tsCLI = new TypescriptCLIScaffolder();
+                tsCLI.scaffold(path);
+                break;
+        
+            default:
+                System.out.println("There is no implementation for this template type yet.");
+                break;
+        }
     }
 }

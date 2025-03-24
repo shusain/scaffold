@@ -7,7 +7,7 @@ import static com.shaunhusain.BashLike.*;
 public class TypescriptCLIScaffolder {
 
     void scaffold(String targetDirectory) {
-        echo("Making project directory: $1");
+        echo("Making project directory: " + targetDirectory);
         mkdir(targetDirectory);
 
         // String path = System.getenv( "PATH" );
@@ -23,7 +23,7 @@ public class TypescriptCLIScaffolder {
         exec("npx json --in-place -f package.json -e 'this.scripts={\"start\": \"ts-node index.ts\"}'", targetDirectory);
         
         ResourceLoader rl = new ResourceLoader();
-        String indexTSContents = rl.readTestResource();
+        String indexTSContents = rl.readTestResource("templates/node-typescript-cli/index.ts");
         writeFile(targetDirectory+File.separator+"index.ts", indexTSContents);
 
         echo("Adjust the tsconfig.json as necessary for the target or output and compiler flags");

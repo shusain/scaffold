@@ -16,12 +16,19 @@ public class BashLike {
         }
     }
 
-
+    
     public static void exec(String command, String workingDirectory) {
+        exec(command, workingDirectory, false);
+    }
+    public static void exec(String command, String workingDirectory, Boolean verbose) {
         Process p = null;
 
         ProcessBuilder pb = new ProcessBuilder("/bin/bash","-c", command);
         pb.directory(new File(workingDirectory));
+
+        // Redirects error to std-out so process output/errors can
+        // easily be monitored on a single stream.
+        pb.redirectErrorStream(true);
 
         try {
             p = pb.start();
@@ -31,9 +38,18 @@ public class BashLike {
             BufferedReader buff = new BufferedReader (isr);
 
             String line;
-            while((line = buff.readLine()) != null)
-                System.out.println(line);
-        } catch (IOException e) {
+
+            if(verbose) {
+                while((line = buff.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+
+            // Waiting for the process to complete to make sure exec calls back
+            // to back run sequentially (one completes before the next begins)
+            p.waitFor();
+            
+        } catch (IOException | InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -41,6 +57,12 @@ public class BashLike {
     }
 
 
+    /**
+     * Writes out given contents to the filePath.
+     * 
+     * @param filePath
+     * @param contents
+     */
     public static void writeFile(String filePath, String contents) {
         try (FileWriter writer = new FileWriter(filePath)) {
             writer.write(contents);
@@ -50,7 +72,10 @@ public class BashLike {
         }
     }
 
-
+    /**
+     * Shorthand for System.out.println
+     * @param msg
+     */
     public static void echo(String msg) {
         System.out.println(msg);
     }

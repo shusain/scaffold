@@ -7,22 +7,32 @@ import java.io.InputStreamReader;
 
 public class ResourceLoader {
     
-    public String readTestResource(){
-        InputStream is = Scaffold.class.getClassLoader().getResourceAsStream("templates/node-typescript-cli/index.ts");
+    public String readTestResource(String resourceRelPath) {
+        return readTestResource(resourceRelPath,false);
+    }
+    public String readTestResource(String resourceRelPath, Boolean verbose) {
+        InputStream is = Scaffold.class.getClassLoader().getResourceAsStream(resourceRelPath);
         // InputStream is = Scaffold.class.getClassLoader().getResourceAsStream("test.html");
         StringBuilder sb = new StringBuilder();
         
         try (BufferedReader r = new BufferedReader(new InputStreamReader(is));) {
-            System.out.println("=== Resource Contents ===");
+            if(verbose)
+                System.out.println("=== Resource Contents ===");
+            
             while (r.ready()) {
                 String nextLine = r.readLine();
                 sb.append(nextLine);
-                System.out.println(nextLine);
+                if(verbose) {
+                    System.out.println(nextLine);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("=== End ===");
+        
+        if(verbose) {
+            System.out.println("=== End ===");
+        }
         return sb.toString();
     }
 }
