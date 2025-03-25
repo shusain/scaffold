@@ -21,7 +21,7 @@ public class ResourceLoader {
             
             while (r.ready()) {
                 String nextLine = r.readLine();
-                sb.append(nextLine);
+                sb.append(nextLine + System.lineSeparator());
                 if(verbose) {
                     System.out.println(nextLine);
                 }

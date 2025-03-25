@@ -7,21 +7,22 @@ import static com.shaunhusain.BashLike.*;
 public class TypescriptCLIScaffolder {
 
     void scaffold(String targetDirectory) {
-        echo("Making project directory: " + targetDirectory);
+        echo("Making project directory: " + targetDirectory + "\n");
         mkdir(targetDirectory);
 
         // String path = System.getenv( "PATH" );
         // System.out.println(String.format("The system path is: %s", path));
 
-        echo("Initializing npm with defaults accepted\n");
+        echo("Initializing npm with defaults accepted");
         exec("npm init -y", targetDirectory);
 
-        echo("Installing typescript and intializing tsconfig.json with defaults\n\n");
+        echo("Installing typescript and intializing tsconfig.json with defaults\n");
         exec("npm install typescript ts-node json", targetDirectory);
         
         exec("npx tsc --init", targetDirectory);
-        exec("npx json --in-place -f package.json -e 'this.scripts={\"start\": \"ts-node index.ts\"}'", targetDirectory);
+        exec("npx json --in-place -f package.json -e 'this.scripts={\n    \"start\": \"parcel\"\n    \"build\": \"parcel build\"}'", targetDirectory);
         
+        // Loading up resource from baked in resources for given template type and writing out to target directory
         ResourceLoader rl = new ResourceLoader();
         String indexTSContents = rl.readTestResource("templates/node-typescript-cli/index.ts");
         writeFile(targetDirectory+File.separator+"index.ts", indexTSContents);

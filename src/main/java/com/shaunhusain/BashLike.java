@@ -2,10 +2,12 @@ package com.shaunhusain;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.CharBuffer;
 
 public class BashLike {
     
@@ -66,7 +68,7 @@ public class BashLike {
     public static void writeFile(String filePath, String contents) {
         try (FileWriter writer = new FileWriter(filePath)) {
             writer.write(contents);
-            System.out.println("Successfully wrote to the file.");
+            System.out.println("Successfully wrote to the file to: " + filePath);
         } catch (IOException e) {
             System.err.println("An error occurred while writing to the file: " + e.getMessage());
         }

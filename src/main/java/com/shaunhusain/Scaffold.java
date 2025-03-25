@@ -37,8 +37,10 @@ public class Scaffold
                 .defaultHelp(true)
                 .description("Generates initial project configurations for various development work.");
         parser.addArgument("-t", "--type")
-                .choices("ts-cli", "ts-express", "ts-pixi", "ts-matter").setDefault("ts-cli")
-                .help("Specify template type to use. Options: {ts-cli,ts-express,ts-pixi,ts-matter}").metavar("");
+                .choices("ts-cli", "ts-express", "ts-pixi", "ts-matter")
+                .setDefault("ts-cli")
+                .help("Specify template type to use. Options: {ts-cli, ts-express, ts-pixi, ts-matter}")
+                .metavar("");
 
         parser.addArgument("folder")
             .type(Arguments.fileType()
@@ -71,7 +73,12 @@ public class Scaffold
                 TypescriptCLIScaffolder tsCLI = new TypescriptCLIScaffolder();
                 tsCLI.scaffold(path);
                 break;
-        
+
+            case "ts-pixi":
+                TypescriptPixiScaffolder scaffolder = new TypescriptPixiScaffolder();
+                scaffolder.scaffold(path);
+            break;
+            
             default:
                 System.out.println("There is no implementation for this template type yet.");
                 break;
