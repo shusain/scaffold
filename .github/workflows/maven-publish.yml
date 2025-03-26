@@ -4,6 +4,7 @@
 name: Maven Package
 permissions:
   contents: write
+  package: write
 
 on:
   push:
@@ -13,9 +14,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  strategy:
+    matrix.os: ubuntu-latest
+    matrix.label: scaffold-lin
+    matrix.os: macos-latest
+    matrix.label: scaffold-mac
+    matrix.os: windows-latest
+    matrix.label: scaffold-win.exe
+
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v4
@@ -51,7 +60,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
         asset_path: ./target/scaffold
-        asset_name: scaffold
+        asset_name: ${{ matrix.label }}
         asset_content_type: application/exe
 
     - name: Publish to GitHub Packages Apache Maven
