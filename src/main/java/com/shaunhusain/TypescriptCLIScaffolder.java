@@ -17,11 +17,21 @@ public class TypescriptCLIScaffolder {
         exec("npm init -y", targetDirectory);
 
         echo("Installing typescript and intializing tsconfig.json with defaults\n");
-        exec("npm install typescript ts-node json", targetDirectory);
+        exec("npm install typescript ts-node @types/node", targetDirectory);
         
         exec("npx tsc --init", targetDirectory);
-        exec("npx json --in-place -f package.json -e 'this.scripts={\n    \"start\": \"parcel\"\n    \"build\": \"parcel build\"}'", targetDirectory);
         
+
+        PackageJSONEditor packageEditor = new PackageJSONEditor(targetDirectory, true);
+        packageEditor.setMain("index.ts");
+        packageEditor.replaceScripts(
+        """
+        {
+            "start": "ts-node index.ts"
+        }
+        """);
+        writeFile(targetDirectory+File.separator+"package.json", packageEditor.packageNodeTree.toPrettyString());
+
         // Loading up resource from baked in resources for given template type and writing out to target directory
         ResourceLoader rl = new ResourceLoader();
         String indexTSContents = rl.readTestResource("templates/node-typescript-cli/index.ts");

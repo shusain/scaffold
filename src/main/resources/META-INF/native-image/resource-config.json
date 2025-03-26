@@ -7,9 +7,13 @@
   }, {
     "pattern":"\\Qtemplates/node-typescript-cli/index.ts\\E"
   }, {
+    "pattern":"\\Qtemplates/node-typescript-expressjs/index.ts\\E"
+  }, {
     "pattern":"\\Qtemplates/node-typescript-pixijs/src/AppPixi.ts\\E"
   }, {
     "pattern":"\\Qtemplates/node-typescript-pixijs/src/index.html\\E"
+  }, {
+    "pattern":"java.base:\\Qsun/text/resources/LineBreakIteratorData\\E"
   }]},
   "bundles":[{
     "name":"net.sourceforge.argparse4j.internal.ArgumentParserImpl",
