@@ -71,8 +71,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: path/to/artifacts
-        merge-multiple: true
-        
+
     - name: Display structure of downloaded files
       run: ls -R path/to/artifacts
 
@@ -81,7 +80,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: /home/runner/work/scaffold/scaffold/path/to/artifacts/ubuntu-latest-bin
+        asset_path: path/to/artifacts/ubuntu-latest-bin/scaffold
         asset_name: scaffold_lin
         asset_content_type: application/exe
 
@@ -90,7 +89,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: /home/runner/work/scaffold/scaffold/path/to/artifacts/windows-latest-bin
+        asset_path: path/to/artifacts/windows-latest-bin/scaffold.exe
         asset_name: scaffold_win.exe
         asset_content_type: application/exe
 
@@ -99,7 +98,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: /home/runner/work/scaffold/scaffold/path/to/artifacts/macos-latest-bin
+        asset_path: path/to/artifacts/macos-latest-bin/scaffold
         asset_name: scaffold_mac
         asset_content_type: application/exe
 
