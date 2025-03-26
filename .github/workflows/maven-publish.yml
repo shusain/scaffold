@@ -4,7 +4,7 @@
 name: Maven Package
 permissions:
   contents: write
-  package: write
+  packages: write
 
 on:
   push:
