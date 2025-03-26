@@ -16,16 +16,18 @@ on:
 jobs:
   platforms_matrix:
     strategy:
-      matrix.os: ubuntu-latest
-      matrix.label: scaffold-lin
-      matrix.os: macos-latest
-      matrix.label: scaffold-mac
-      matrix.os: windows-latest
-      matrix.label: scaffold-win.exe
+      matrix:
+        os:
+          - name: ubuntu-latest
+            filename: scaffold-lin
+          - name: macos-latest
+            filename: scaffold-mac
+          - name: windows-latest
+            filename: scaffold-win.exe
 
   build:
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os.name }}
 
     steps:
     - uses: actions/checkout@v4
@@ -61,7 +63,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
         asset_path: ./target/scaffold
-        asset_name: ${{ matrix.label }}
+        asset_name: ${{ matrix.os.filename }}
         asset_content_type: application/exe
 
     - name: Publish to GitHub Packages Apache Maven
