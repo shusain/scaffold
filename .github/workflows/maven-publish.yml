@@ -14,13 +14,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  strategy:
-    matrix.os: ubuntu-latest
-    matrix.label: scaffold-lin
-    matrix.os: macos-latest
-    matrix.label: scaffold-mac
-    matrix.os: windows-latest
-    matrix.label: scaffold-win.exe
+  platforms_matrix:
+    strategy:
+      matrix.os: ubuntu-latest
+      matrix.label: scaffold-lin
+      matrix.os: macos-latest
+      matrix.label: scaffold-mac
+      matrix.os: windows-latest
+      matrix.label: scaffold-win.exe
 
   build:
 
