@@ -2,7 +2,9 @@
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
 
 name: Maven Package
-
+permissions:
+  contents: write
+  
 on:
   push:
     # Sequence of patterns matched against refs/tags
