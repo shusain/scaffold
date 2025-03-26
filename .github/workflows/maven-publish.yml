@@ -102,7 +102,7 @@ jobs:
         asset_name: scaffold_mac
         asset_content_type: application/exe
 
-    - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
-      env:
+    # - name: Publish to GitHub Packages Apache Maven
+    #   run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+    #   env:
         GITHUB_TOKEN: ${{ github.token }}
