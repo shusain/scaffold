@@ -1,5 +1,21 @@
-# WIP Work in Progress
-Project is just setup as a starting point for building native executables from JARs for the CLI tool and some basic structure. Still need to migrate some bash scripted functionality into here for scaffolding out projects and load default resources into directories to build new projects.
+# Intro
+Scaffold tool meant to help simplify the process of getting up and running with using Typescript (or other languages) with other supporting libs for various tasks.
+
+Common use cases for a Typescript app are:
+
+Description | Template Name
+----------- | --------------
+CLI/console/terminal text-based apps. | ts-cli
+ExpressJS based APIs | ts-express
+PixiJS+Parcel graphics/animation/asset library example | ts-pixi
+
+More to come.
+
+# Prerequisite
+
+To build and run you'll need OpenJDK 21 LTS for the native build GraalVM JDK is required for the `native-image` and supporting tools.
+
+Work in Progress - Building native images for each platform so no JDK is necessary to use/run the tool.
 
 # Compile and Run
 
@@ -42,10 +58,10 @@ Similarly to build a native image (notice don't include the com.shaunhusain.Scaf
 # Extra flags to bundle resources not found by static code analysis by Graal native-image builder
 native-image \
 -H:IncludeResources=test.html \
--cp "target/scaffold-1.0-SNAPSHOT.jar:target/lib/*" com.shaunhusain.Scaffold testing
+-cp "target/scaffold-1.0-SNAPSHOT.jar:target/lib/*" com.shaunhusain.Scaffold scaffold-test
 
 # Example execution
-./testing -t ts-pixi SOME_PATH_HERE
+./scaffold-test -t ts-pixi /tmp/test-pixi
 ```
 
 To update the metadata for the program before running a native build execute the app like:
@@ -56,7 +72,12 @@ rm -rf src/main/resources/META-INF/native-image/
 mkdir src/main/resources/META-INF/native-image/
 
 java -agentlib:native-image-agent=config-output-dir=./src/main/resources/META-INF/native-image/ \
--jar target/scaffold-jar-with-dependencies.jar ./
+-jar target/scaffold-jar-with-dependencies.jar /tmp/test-default
+
+
+# Notice use config-merge-dir, to add extra executions
+java -agentlib:native-image-agent=config-merge-dir=./src/main/resources/META-INF/native-image/ \
+-jar target/scaffold-jar-with-dependencies.jar -t ts-pixi /tmp/test-pixi
 ```
 
 https://www.graalvm.org/latest/reference-manual/native-image/metadata/AutomaticMetadataCollection/

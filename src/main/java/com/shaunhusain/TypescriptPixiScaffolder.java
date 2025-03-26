@@ -44,6 +44,8 @@ public class TypescriptPixiScaffolder {
             }\r
             """);
 
+
+
             writeFile(targetDirectory+File.separator+"package.json", packageEditor.packageNodeTree.toPrettyString());
 
         } catch (IOException e) {

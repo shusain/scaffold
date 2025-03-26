@@ -6,9 +6,13 @@
     "pattern":"\\QMETA-INF/services/java.util.spi.ResourceBundleControlProvider\\E"
   }, {
     "pattern":"\\Qtemplates/node-typescript-cli/index.ts\\E"
+  }, {
+    "pattern":"\\Qtemplates/node-typescript-pixijs/src/AppPixi.ts\\E"
+  }, {
+    "pattern":"\\Qtemplates/node-typescript-pixijs/src/index.html\\E"
   }]},
   "bundles":[{
     "name":"net.sourceforge.argparse4j.internal.ArgumentParserImpl",
-    "locales":["", "en"]
+    "locales":["", "en", "und"]
   }]
 }

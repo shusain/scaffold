@@ -78,6 +78,11 @@ public class Scaffold
                 TypescriptPixiScaffolder scaffolder = new TypescriptPixiScaffolder();
                 scaffolder.scaffold(path);
             break;
+
+            case "ts-express":
+                TypescriptExpressScaffolder express = new TypescriptExpressScaffolder();
+                express.scaffold(path);
+            break;
             
             default:
                 System.out.println("There is no implementation for this template type yet.");
