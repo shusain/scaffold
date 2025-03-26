@@ -49,54 +49,54 @@ jobs:
         retention-days: 5
 
 
-    create_release:
+  create_release:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    needs: [build]
+    steps:
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    
+    - name: Download all workflow run artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: path/to/artifacts
+        merge-multiple: true
+
+    - name: Upload Linux Release Asset
+      id: linux-release-asset 
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: path/to/artifacts/ubuntu-latest-bin
+        asset_name: scaffold_lin
+        asset_content_type: application/exe
+
+    - name: Upload Windows Release Asset
+      id: windows-release-asset 
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: path/to/artifacts/windows-latest-bin
+        asset_name: scaffold_win
+        asset_content_type: application/exe
+
+    - name: Upload Mac Release Asset
+      id: macos-release-asset 
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: path/to/artifacts/macos-latest-bin
+        asset_name: scaffold_mac
+        asset_content_type: application/exe
+
+    - name: Publish to GitHub Packages Apache Maven
+      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      needs: [build]
-      steps:
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-      
-      - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: path/to/artifacts
-          merge-multiple: true
-
-      - name: Upload Linux Release Asset
-        id: linux-release-asset 
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: path/to/artifacts/ubuntu-latest-bin
-          asset_name: scaffold_lin
-          asset_content_type: application/exe
-
-      - name: Upload Windows Release Asset
-        id: windows-release-asset 
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: path/to/artifacts/windows-latest-bin
-          asset_name: scaffold_win
-          asset_content_type: application/exe
-
-      - name: Upload Mac Release Asset
-        id: macos-release-asset 
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: path/to/artifacts/macos-latest-bin
-          asset_name: scaffold_mac
-          asset_content_type: application/exe
-
-      - name: Publish to GitHub Packages Apache Maven
-        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ github.token }}
