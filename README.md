@@ -3,11 +3,12 @@ Scaffold tool meant to help simplify the process of getting up and running with 
 
 Common use cases for a Typescript app are:
 
-Description | Template Name
------------ | --------------
-CLI/console/terminal text-based apps. | ts-cli
-ExpressJS based APIs | ts-express
-PixiJS+Parcel graphics/animation/asset library example | ts-pixi
+Template Name | Description
+------------- | --------------
+ts-cli        | CLI/console/terminal text-based apps.
+ts-express    | ExpressJS based APIs
+ts-pixi       | PixiJS+Parcel graphics/animation/asset library example
+ts-matter     | MatterJS+Parcel 2D Physics Engine
 
 More to come.
 
@@ -51,6 +52,7 @@ GitHub Actions are used for automating builds for each platform (found on Github
 
 Example:
 ```
+git tag # list all current tags, go to end for last made, bump by 1
 git tag -a v0.1.1-beta -m "better logging"
 git push origin v0.1.1-beta
 ```
