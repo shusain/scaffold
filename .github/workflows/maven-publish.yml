@@ -90,6 +90,9 @@ jobs:
     - name: Mark Linux/Mac native-images with executable bits
       run: chmod ug+x path/to/artifacts/ubuntu-latest-bin/scaffold path/to/artifacts/macos-latest-bin/scaffold  path/to/artifacts/macos-13-bin/scaffold
 
+    - name: Display structure of downloaded files after chmod
+      run: ls -alhR path/to/artifacts
+
     - name: Upload Linux Release Asset
       id: linux-release-asset 
       uses: actions/upload-release-asset@v1
@@ -97,7 +100,6 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
         asset_path: path/to/artifacts/ubuntu-latest-bin/scaffold
         asset_name: scaffold_lin
-        asset_content_type: application/exe
 
     - name: Upload Windows Release Asset
       id: windows-release-asset 
@@ -106,7 +108,6 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
         asset_path: path/to/artifacts/windows-latest-bin/scaffold.exe
         asset_name: scaffold_win.exe
-        asset_content_type: application/exe
 
     - name: Upload Mac Intel Release Asset
       id: macos-intel-release-asset 
@@ -115,7 +116,6 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
         asset_path: path/to/artifacts/macos-13-bin/scaffold
         asset_name: scaffold_mac_intel
-        asset_content_type: application/exe
 
     - name: Upload Mac ARM Release Asset
       id: macos-arm-release-asset 
@@ -124,7 +124,6 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
         asset_path: path/to/artifacts/macos-latest-bin/scaffold
         asset_name: scaffold_mac_arm
-        asset_content_type: application/exe
 
     # - name: Publish to GitHub Packages Apache Maven
     #   run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
