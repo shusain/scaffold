@@ -43,9 +43,19 @@ After packaging the native build you can run the executable directly:
 
 `./target/scaffold`
 
-# Troubleshooting
+# Automated Build
 
-The maven dependencies plugin is setup to copy all the project dependency JAR into `target/lib`.
+GitHub Actions are used for automating builds for each platform (found on Github Releases for this repo).  The build runs a set of jobs (one for each target platform)
+
+## Git Tagging
+
+Example:
+```
+git tag -a v0.1.1-beta -m "better logging"
+git push origin v0.1.1-beta
+```
+
+# Troubleshooting
 
 A set of JARs can be loaded into the class-path and the app can be run more directly with `java -cp` like:
 

@@ -14,10 +14,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  create_metadata:
-    steps:
-    - uses: actions/checkout@v4
-
   build:
     strategy:
       matrix:
@@ -42,6 +38,9 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
+    # TODO: could separate this into a different step but need to upload/download artifact of the JAR
+    # to then process with native-image on each platform, would require moving away from using maven
+    # for builting the native-images and config for that step. 
     - name: Build Assembled JAR with Maven
       id: maven_build
       run: mvn -B clean package --file pom.xml
