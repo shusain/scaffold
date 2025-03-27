@@ -1,22 +1,28 @@
-package com.shaunhusain;
+package com.shaunhusain.scaffolders.typescript;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.shaunhusain.PackageJSONEditor;
+import com.shaunhusain.ResourceLoader;
+import com.shaunhusain.scaffolders.IScaffold;
+
 import static com.shaunhusain.BashLike.*;
 
-public class TypescriptExpressScaffolder {
+public class ExpressAPIScaffolder implements IScaffold {
+    private static Logger logger = LoggerFactory.getLogger(ExpressAPIScaffolder.class);
 
-    void scaffold(String targetDirectory) {
-        echo("Making project directory: " + targetDirectory + "\n");
+    public void scaffold(String targetDirectory) {
+        
+        logger.info("Making project directory: " + targetDirectory + "\n");
         mkdir(targetDirectory);
 
-        // String path = System.getenv( "PATH" );
-        // System.out.println(String.format("The system path is: %s", path));
-
-        echo("Initializing npm with defaults accepted");
+        logger.info("Initializing npm with defaults accepted");
         exec("npm init -y", targetDirectory);
 
-        echo("Installing typescript and intializing tsconfig.json with defaults\n");
+        logger.info("Installing typescript and intializing tsconfig.json with defaults\n");
         exec("npm install typescript ts-node express cors @types/cors @types/express", targetDirectory);
         
         exec("npx tsc --init", targetDirectory);
@@ -32,14 +38,14 @@ public class TypescriptExpressScaffolder {
             "start": "ts-node index.ts"
         }
         """);
-        writeFile(targetDirectory+File.separator+"package.json", packageEditor.packageNodeTree.toPrettyString());
+        writeFile(targetDirectory+File.separator+"package.json", packageEditor.getPackageTree().toPrettyString());
 
         // Loading up resource from baked in resources for given template type and writing out to target directory
         ResourceLoader rl = new ResourceLoader();
         String indexTSContents = rl.readTestResource("templates/node-typescript-expressjs/index.ts");
         writeFile(targetDirectory+File.separator+"index.ts", indexTSContents);
 
-        echo("Adjust the tsconfig.json as necessary for the target or output and compiler flags");
-        echo("Creating empty index.ts to start");
+        logger.info("Adjust the tsconfig.json as necessary for the target or output and compiler flags");
+        logger.info("Creating empty index.ts to start");
     }    
 }

@@ -5,8 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ResourceLoader {
-    
+    private static Logger logger = LoggerFactory.getLogger(PackageJSONEditor.class);
+
     public String readTestResource(String resourceRelPath) {
         return readTestResource(resourceRelPath,false);
     }
@@ -17,13 +21,13 @@ public class ResourceLoader {
         
         try (BufferedReader r = new BufferedReader(new InputStreamReader(is));) {
             if(verbose)
-                System.out.println("=== Resource Contents ===");
+                logger.info("=== Resource Contents ===");
             
             while (r.ready()) {
                 String nextLine = r.readLine();
                 sb.append(nextLine + System.lineSeparator());
                 if(verbose) {
-                    System.out.println(nextLine);
+                    logger.info(nextLine);
                 }
             }
         } catch (IOException e) {
@@ -31,7 +35,7 @@ public class ResourceLoader {
         }
         
         if(verbose) {
-            System.out.println("=== End ===");
+            logger.info("=== End ===");
         }
         return sb.toString();
     }

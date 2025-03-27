@@ -2,15 +2,17 @@ package com.shaunhusain;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.CharBuffer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BashLike {
-    
+    private static Logger logger = LoggerFactory.getLogger(BashLike.class);
+
     public static void mkdir(String targetDirectory) {
         File theDir = new File(targetDirectory);
         if (!theDir.exists()){
@@ -22,10 +24,19 @@ public class BashLike {
     public static void exec(String command, String workingDirectory) {
         exec(command, workingDirectory, false);
     }
+    
     public static void exec(String command, String workingDirectory, Boolean verbose) {
         Process p = null;
+        ProcessBuilder pb;
 
-        ProcessBuilder pb = new ProcessBuilder("/bin/bash","-c", command);
+        switch (OSDetect.getOS()) {
+            case WINDOWS:
+                pb  = new ProcessBuilder("cmd.exe", "/c", command);
+                break;
+            default:
+                pb  = new ProcessBuilder("/bin/bash","-c", command);
+                break;
+        }
         pb.directory(new File(workingDirectory));
 
         // Redirects error to std-out so process output/errors can
@@ -43,7 +54,7 @@ public class BashLike {
 
             if(verbose) {
                 while((line = buff.readLine()) != null) {
-                    System.out.println(line);
+                    logger.info(line);
                 }
             }
 
@@ -68,17 +79,9 @@ public class BashLike {
     public static void writeFile(String filePath, String contents) {
         try (FileWriter writer = new FileWriter(filePath)) {
             writer.write(contents);
-            System.out.println("Successfully wrote to the file to: " + filePath);
+            logger.info("Successfully wrote to the file to: " + filePath);
         } catch (IOException e) {
             System.err.println("An error occurred while writing to the file: " + e.getMessage());
         }
-    }
-
-    /**
-     * Shorthand for System.out.println
-     * @param msg
-     */
-    public static void echo(String msg) {
-        System.out.println(msg);
     }
 }

@@ -14,9 +14,11 @@ on:
   workflow_dispatch:
 
 jobs:
+  create_metadata:
+    steps:
+    - uses: actions/checkout@v4
 
   build:
-
     strategy:
       matrix:
         os:
@@ -40,11 +42,18 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-    - name: Build with Maven
+    - name: Build Assembled JAR with Maven
+      id: maven_build
+      run: mvn -B clean package --file pom.xml
+
+    - name: Clean and Rebuild Metadata (for Native build)
+      run: ./gh-scripts/cleanAndCreateMetadata.sh
+
+    - name: Build `native-image` with Maven
       id: maven_build
       run: mvn -B -Pnative package --file pom.xml
 
-    - name: 'Upload Artifact'
+    - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.os.name }}-bin
