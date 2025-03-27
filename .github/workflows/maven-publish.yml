@@ -20,13 +20,12 @@ jobs:
         os:
           - name: ubuntu-latest
             origfilename: scaffold
-            filename: scaffold-lin
+          - name: macos-13
+            origfilename: scaffold
           - name: macos-latest
             origfilename: scaffold
-            filename: scaffold-mac
           - name: windows-latest
             origfilename: scaffold.exe
-            filename: scaffold-win.exe
     runs-on: ${{ matrix.os.name }}
     steps:
     - uses: actions/checkout@v4
@@ -83,6 +82,9 @@ jobs:
     - name: Display structure of downloaded files
       run: ls -R path/to/artifacts
 
+    - name: Mark Linux/Mac native-images with executable bits
+      run: chmod ug+x path/to/artifacts/ubuntu-latest-bin/scaffold path/to/artifacts/macos-latest-bin/scaffold  path/to/artifacts/macos-13-bin/scaffold
+
     - name: Upload Linux Release Asset
       id: linux-release-asset 
       uses: actions/upload-release-asset@v1
@@ -101,13 +103,22 @@ jobs:
         asset_name: scaffold_win.exe
         asset_content_type: application/exe
 
-    - name: Upload Mac Release Asset
+    - name: Upload Mac Intel Release Asset
+      id: macos-release-asset 
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: path/to/artifacts/macos-13-bin/scaffold
+        asset_name: scaffold_mac_intel
+        asset_content_type: application/exe
+
+    - name: Upload Mac ARM Release Asset
       id: macos-release-asset 
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
         asset_path: path/to/artifacts/macos-latest-bin/scaffold
-        asset_name: scaffold_mac
+        asset_name: scaffold_mac_arm
         asset_content_type: application/exe
 
     # - name: Publish to GitHub Packages Apache Maven
