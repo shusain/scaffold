@@ -85,7 +85,7 @@ jobs:
         path: path/to/artifacts
 
     - name: Display structure of downloaded files
-      run: ls -R path/to/artifacts
+      run: ls -alhR path/to/artifacts
 
     - name: Mark Linux/Mac native-images with executable bits
       run: chmod ug+x path/to/artifacts/ubuntu-latest-bin/scaffold path/to/artifacts/macos-latest-bin/scaffold  path/to/artifacts/macos-13-bin/scaffold

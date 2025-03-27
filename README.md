@@ -1,11 +1,44 @@
 # Intro
+
 Scaffold tool meant to help simplify the process of getting up and running with using Typescript (or other languages) with other supporting libs for various tasks.
 
 Download a prebuilt release from the [releases page](https://github.com/shusain/scaffold/releases/)
 
 Feel free to rename or move the binary to a convenient location like `/usr/local/bin` or any other location in your PATH or update your PATH so it can be used from any folder/directory in a terminal.
 
-Common use cases for a Typescript app are:
+If on Mac or Linux be sure to mark the downloaded file as an executable.  After downloading:
+
+```sh
+# allow your user and/or group to run the program
+chmod ug+x ~/Downloads/scaffold*
+
+# rename the downloaded binary
+# not necessary but easier for subsequent usage
+# also moving to bin folder in my user home since is set in my PATH
+mv ~/Downloads/scaffold* ~/bin/scaffold
+
+# scaffold out a TS-CLI project (the default type) in the /tmp/test-cli folder
+./scaffold /tmp/test-cli
+```
+
+The only required argument is the path to use for scaffolding the project.
+
+ - `-t|--type` flag with the type desired.
+
+ - `-h|--help` flag to see all the types or other options.
+
+```bash
+
+./scaffold -t ts-pixi /tmp/test-pixi
+```
+
+Then to run or edit the scaffolded project
+```sh
+npm start --prefix /tmp/test-cli
+code /tmp/test-cli
+```
+
+Common use cases and supported templates/types for a Typescript app are:
 
 Template Name | Description
 ------------- | --------------
@@ -17,6 +50,8 @@ ts-matter     | MatterJS+Parcel 2D Physics Engine
 More to come.
 
 # Prerequisite
+
+## Prebuilt Releases
 
 To run the prebuilt executable you will need Node v20 or higher installed already.  Use `nvm` or any other means of getting `node/npm` onto the system environment PATH.
 
@@ -37,11 +72,9 @@ echo "export PATH=$(pwd)/node-v20.19.0-linux-x64/bin:\$PATH" >> ~/.bashrc # Upda
 ```
 
 
----
+## Building the Scaffolder from Java source code
 
-To build and run you'll need OpenJDK 21 LTS for the native build GraalVM JDK is required for the `native-image` and supporting tools.
-
-Work in Progress - Building native images for each platform so no JDK is necessary to use/run the tool.
+To build and run the scaffolder itself you'll need OpenJDK 21 LTS for the native build GraalVM JDK is required for the `native-image` and supporting tools.
 
 # Compile and Run
 
@@ -73,13 +106,14 @@ After packaging the native build you can run the executable directly:
 
 GitHub Actions are used for automating builds for each platform (found on Github Releases for this repo).  The build runs a set of jobs (one for each target platform)
 
-## Git Tagging
+## Git Tagging and Releases
+The new release builds are made each time a new tag is pushed to the repo.  To create and push a new tag see sample commands below
 
 Example:
 ```
-git tag # list all current tags, go to end for last made, bump by 1
-git tag -a v0.1.1-beta -m "better logging"
-git push origin v0.1.1-beta
+git tag                                         # list all current tags, go to end for last made, bump by 1
+git tag -a v0.1.1-beta -m "better logging"      # create a new tag with a message/note/description
+git push origin v0.1.1-beta                     # push the tag to the remote called origin
 ```
 
 # Troubleshooting
