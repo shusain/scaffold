@@ -44,6 +44,11 @@ jobs:
       id: maven_build_jar
       run: mvn -B clean package --file pom.xml
 
+
+    # TODO: consider using pom.xml based metadata collection configuration, this script works for now
+    # but may be easier to use the pom based configuration and automated test execution or other to
+    # simplify maintaining this script.
+    # https://graalvm.github.io/native-build-tools/latest/end-to-end-maven-guide.html#collect-metadata
     - name: Clean and Rebuild Metadata (for Native build)
       run: ./gh-scripts/cleanAndCreateMetadata.sh
 
