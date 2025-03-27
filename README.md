@@ -21,6 +21,9 @@ mv ~/Downloads/scaffold* ~/bin/scaffold
 ./scaffold /tmp/test-cli
 ```
 
+> For MacOS on first run if the app is blocked open the **System Settings** -> **Privacy and Security**, and click the button to **Allow Anyway** for the app to run.
+![](./system-settings.png)
+
 The only required argument is the path to use for scaffolding the project.
 
  - `-t|--type` flag with the type desired.
@@ -122,6 +125,9 @@ A set of JARs can be loaded into the class-path and the app can be run more dire
 
 `java -cp "target/scaffold-1.0-SNAPSHOT.jar:target/lib/*" com.shaunhusain.Scaffold ./`
 
+To update the metadata for the program before running a native build, you can use the script in the repo (after `mvn clean package`):
+[`gh-scripts/cleanAndCreateMetadata.sh`](gh-scripts/cleanAndCreateMetadata.sh)
+
 Similarly to build a native image (notice don't include the com.shaunhusain.Scaffold args to the app when building native-image).
 
 ```bash
@@ -135,20 +141,5 @@ native-image \
 ./scaffold-test -t ts-pixi /tmp/test-pixi
 ```
 
-To update the metadata for the program before running a native build execute the app like:
-
-```bash
-# Clear out metadata
-rm -rf src/main/resources/META-INF/native-image/
-mkdir src/main/resources/META-INF/native-image/
-
-java -agentlib:native-image-agent=config-output-dir=./src/main/resources/META-INF/native-image/ \
--jar target/scaffold-jar-with-dependencies.jar /tmp/test-default
-
-
-# Notice use config-merge-dir, to add extra executions
-java -agentlib:native-image-agent=config-merge-dir=./src/main/resources/META-INF/native-image/ \
--jar target/scaffold-jar-with-dependencies.jar -t ts-pixi /tmp/test-pixi
-```
 
 https://www.graalvm.org/latest/reference-manual/native-image/metadata/AutomaticMetadataCollection/
