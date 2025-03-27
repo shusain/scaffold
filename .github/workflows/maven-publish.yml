@@ -42,14 +42,14 @@ jobs:
     # to then process with native-image on each platform, would require moving away from using maven
     # for builting the native-images and config for that step. 
     - name: Build Assembled JAR with Maven
-      id: maven_build
+      id: maven_build_jar
       run: mvn -B clean package --file pom.xml
 
     - name: Clean and Rebuild Metadata (for Native build)
       run: ./gh-scripts/cleanAndCreateMetadata.sh
 
     - name: Build `native-image` with Maven
-      id: maven_build
+      id: maven_build_native
       run: mvn -B -Pnative package --file pom.xml
 
     - name: Upload Artifact
