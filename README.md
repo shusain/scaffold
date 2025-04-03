@@ -17,8 +17,20 @@ chmod ug+x ~/Downloads/scaffold*
 # also moving to bin folder in my user home since is set in my PATH
 mv ~/Downloads/scaffold* ~/bin/scaffold
 
+```
+
+Then to use the scaffold tool
+```bash
 # scaffold out a TS-CLI project (the default type) in the /tmp/test-cli folder
 ./scaffold /tmp/test-cli
+
+```
+
+```powershell
+
+# For the windows download skip updating permissions just use:
+.\scaffold.exe
+
 ```
 
 > For MacOS on first run if the app is blocked open the **System Settings** -> **Privacy and Security**, and click the button to **Allow Anyway** for the app to run.
